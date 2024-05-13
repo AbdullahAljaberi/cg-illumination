@@ -161,7 +161,7 @@ class Renderer {
     let sphere1 = CreateSphere("sphere1", {diameter:4, segments: 100 }, scene);
     sphere1.position = new Vector3(0.5, 6.5, 3.0);
     sphere1.metadata = {
-      mat_color: new Color3(0.1, 0.35, 0.88),
+      mat_color: new Color3(1, 1, 1),
       mat_texture: white_texture,
       mat_specular: new Color3(0.8, 0.8, 0.8),
       mat_shininess: 16,
