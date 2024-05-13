@@ -62,7 +62,25 @@ class Renderer {
         scene.ground_subdivisions
       );
       this["createScene" + idx](idx);
+      
     });
+    //ABDULLAH MOVING LIGHTS
+    window.addEventListener("keypress", key => {
+      if (String.fromCharCode(key.keyCode) === 'a') {
+          this.scenes[this.active_scene].lights[this.active_light].position.x -= 1;
+      } else if (String.fromCharCode(key.keyCode) === 'd') {
+          this.scenes[this.active_scene].lights[this.active_light].position.x += 1;
+      } else if (String.fromCharCode(key.keyCode) === 'f') {
+          this.scenes[this.active_scene].lights[this.active_light].position.y -= 1;
+      } else if (String.fromCharCode(key.keyCode) === 'r') {
+          this.scenes[this.active_scene].lights[this.active_light].position.y += 1;
+      } else if (String.fromCharCode(key.keyCode) === 'w') {
+          this.scenes[this.active_scene].lights[this.active_light].position.z -= 1;
+      } else if (String.fromCharCode(key.keyCode) === 's') {
+          this.scenes[this.active_scene].lights[this.active_light].position.z += 1;
+      }
+  });
+
   }
 
   createScene0(scene_idx) {
@@ -114,7 +132,7 @@ class Renderer {
     );
     ground_mesh.scaling = new Vector3(20.0, 1.0, 20.0);
     ground_mesh.metadata = {
-      mat_color: new Color3(0.1, 0.65, 0.15),
+      mat_color: new Color3(0.047, 0.039, 0.42),
       mat_texture: white_texture,
       mat_specular: new Color3(0.0, 0.0, 0.0),
       mat_shininess: 1,
@@ -128,7 +146,7 @@ class Renderer {
     for (let i = 0; i < 10; i++) {
     let sphere = CreateSphere("sphere" + i, {diameter: 1, segments: 100 }, scene);
     sphere.position = new Vector3(i * 2-8.5, 1.5, 3.0); // Adjust the x-coordinate for spacing
-    // Define unique colors for each sphere
+    // sphere moon
     let color;
     switch (i % 7) {
         case 0:
@@ -204,6 +222,7 @@ class Renderer {
       };
       box.material = materials["illum_" + this.shading_alg];
       current_scene.models.push(box);
+      
   }
   
     // Animation function - called before each frame gets rendered
@@ -597,7 +616,8 @@ class Renderer {
     light1.diffuse = new Color3(1.0, 1.0, 1.0);
     light1.specular = new Color3(1.0, 1.0, 1.0);
     current_scene.lights.push(light1);
-    let light2 = new PointLight('light2', new Vector3(8.0, 5.0, -10.0), scene);
+
+    let light2 = new PointLight('light2', new Vector3(1.0, 5.0, -10.0), scene);
         light2.diffuse = new Color3(1.0, 1.0, 1.0);
         light2.specular = new Color3(1.0, 1.0, 1.0);
         current_scene.lights.push(light2);
@@ -627,8 +647,8 @@ class Renderer {
     ground_mesh.material = materials["ground_" + this.shading_alg];
 
     // Create other models
-    let sphere = CreateSphere("sphere", { segments: 32 }, scene);
-    sphere.position = new Vector3(1.0, 0.5, 3.0);
+    let sphere = CreateSphere("sphere", { diameter: 2, segments: 100 }, scene);
+    sphere.position = new Vector3(1.0, 1.5, -3.0);
     sphere.metadata = {
       mat_color: new Color3(0.1, 0.35, 0.88),
       mat_texture: white_texture,
