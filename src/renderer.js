@@ -161,14 +161,13 @@ class Renderer {
         case 3:
             color = new Color3(1, 1, 1); // Yellow color
             break;
-        // Add more cases for additional colors as needed
         default:
             color = new Color3(1, 1, 1); // Default white color
             break;
     }
     sphere.metadata = {
         mat_color: color,
-        mat_texture: white_texture,
+        mat_texture: new Texture(BASE_URL + 'textures/themoon.jpg', scene),
         mat_specular: new Color3(0.8, 0.8, 0.8),
         mat_shininess: 6,
         texture_scale: new Vector2(1.0, 1.0),
@@ -180,7 +179,7 @@ class Renderer {
     sphere1.position = new Vector3(0.5, 6.5, 3.0);
     sphere1.metadata = {
       mat_color: new Color3(1, 1, 1),
-      mat_texture: white_texture,
+      mat_texture: new Texture(BASE_URL + 'textures/themoon.jpg', scene),
       mat_specular: new Color3(0.8, 0.8, 0.8),
       mat_shininess: 16,
       texture_scale: new Vector2(1.0, 1.0),
