@@ -645,6 +645,7 @@ class Renderer {
     };
     ground_mesh.material = materials["ground_" + this.shading_alg];
 //PUSH AND COMMIT FOR BEN
+//Test again
     // Create other models
     let sphere = CreateSphere("sphere", { diameter: 2, segments: 100 }, scene);
     sphere.position = new Vector3(1.0, 1.5, -3.0);
