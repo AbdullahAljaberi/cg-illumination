@@ -93,7 +93,7 @@ class Renderer {
     scene.clearColor = current_scene.background_color;
     scene.ambientColor = current_scene.ambient;
     scene.useRightHandedSystem = true;
-
+//Test until fixes it
     // Create camera
     current_scene.camera = new UniversalCamera(
       "camera",
