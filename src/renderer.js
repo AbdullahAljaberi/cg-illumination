@@ -133,7 +133,7 @@ class Renderer {
     ground_mesh.scaling = new Vector3(20.0, 1.0, 20.0);
     ground_mesh.metadata = {
       mat_color: new Color3(0.047, 0.039, 0.42),
-      mat_texture: white_texture,
+      mat_texture: new Texture(BASE_URL + 'textures/sky1.jpg',scene),
       mat_specular: new Color3(0.0, 0.0, 0.0),
       mat_shininess: 1,
       texture_scale: new Vector2(1.0, 1.0),
@@ -644,7 +644,7 @@ class Renderer {
       heightmap: ground_heightmap,
     };
     ground_mesh.material = materials["ground_" + this.shading_alg];
-
+//PUSH AND COMMIT FOR BEN
     // Create other models
     let sphere = CreateSphere("sphere", { diameter: 2, segments: 100 }, scene);
     sphere.position = new Vector3(1.0, 1.5, -3.0);
