@@ -9,6 +9,7 @@ import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector2, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { VertexData } from "@babylonjs/core";
 import { Mesh } from "@babylonjs/core";
+import { CreateCylinder } from "@babylonjs/core/Meshes/Builders/cylinderBuilder";
 
 const BASE_URL = import.meta.env.BASE_URL || "/";
 
@@ -48,8 +49,8 @@ class Renderer {
         camera: null,
         ambient: new Color3(0.2, 0.2, 0.2),
         lights: [],
-        models: []
-    },
+        models: [],
+      },
     ];
     this.active_scene = 0;
     this.active_light = 0;
@@ -62,25 +63,35 @@ class Renderer {
         scene.ground_subdivisions
       );
       this["createScene" + idx](idx);
-      
     });
     //ABDULLAH MOVING LIGHTS
-    window.addEventListener("keypress", key => {
-      if (String.fromCharCode(key.keyCode) === 'a') {
-          this.scenes[this.active_scene].lights[this.active_light].position.x -= 1;
-      } else if (String.fromCharCode(key.keyCode) === 'd') {
-          this.scenes[this.active_scene].lights[this.active_light].position.x += 1;
-      } else if (String.fromCharCode(key.keyCode) === 'f') {
-          this.scenes[this.active_scene].lights[this.active_light].position.y -= 1;
-      } else if (String.fromCharCode(key.keyCode) === 'r') {
-          this.scenes[this.active_scene].lights[this.active_light].position.y += 1;
-      } else if (String.fromCharCode(key.keyCode) === 'w') {
-          this.scenes[this.active_scene].lights[this.active_light].position.z -= 1;
-      } else if (String.fromCharCode(key.keyCode) === 's') {
-          this.scenes[this.active_scene].lights[this.active_light].position.z += 1;
+    window.addEventListener("keypress", (key) => {
+      if (String.fromCharCode(key.keyCode) === "a") {
+        this.scenes[this.active_scene].lights[
+          this.active_light
+        ].position.x -= 1;
+      } else if (String.fromCharCode(key.keyCode) === "d") {
+        this.scenes[this.active_scene].lights[
+          this.active_light
+        ].position.x += 1;
+      } else if (String.fromCharCode(key.keyCode) === "f") {
+        this.scenes[this.active_scene].lights[
+          this.active_light
+        ].position.y -= 1;
+      } else if (String.fromCharCode(key.keyCode) === "r") {
+        this.scenes[this.active_scene].lights[
+          this.active_light
+        ].position.y += 1;
+      } else if (String.fromCharCode(key.keyCode) === "w") {
+        this.scenes[this.active_scene].lights[
+          this.active_light
+        ].position.z -= 1;
+      } else if (String.fromCharCode(key.keyCode) === "s") {
+        this.scenes[this.active_scene].lights[
+          this.active_light
+        ].position.z += 1;
       }
-  });
-
+    });
   }
 
   createScene0(scene_idx) {
@@ -93,7 +104,7 @@ class Renderer {
     scene.clearColor = current_scene.background_color;
     scene.ambientColor = current_scene.ambient;
     scene.useRightHandedSystem = true;
-//Test until fixes it
+    //Test until fixes it
     // Create camera
     current_scene.camera = new UniversalCamera(
       "camera",
@@ -118,7 +129,6 @@ class Renderer {
     light1.specular = new Color3(1.0, 1.0, 1.0);
     current_scene.lights.push(light1);
 
-    
     // Create ground mesh
     let white_texture = RawTexture.CreateRGBTexture(
       new Uint8Array([255, 255, 255]),
@@ -133,7 +143,7 @@ class Renderer {
     ground_mesh.scaling = new Vector3(20.0, 1.0, 20.0);
     ground_mesh.metadata = {
       mat_color: new Color3(0.047, 0.039, 0.42),
-      mat_texture: new Texture(BASE_URL + 'textures/sky1.jpg',scene),
+      mat_texture: new Texture(BASE_URL + "textures/sky1.jpg", scene),
       mat_specular: new Color3(0.0, 0.0, 0.0),
       mat_shininess: 1,
       texture_scale: new Vector2(1.0, 1.0),
@@ -144,86 +154,93 @@ class Renderer {
 
     // Create other models
     for (let i = 0; i < 10; i++) {
-    let sphere = CreateSphere("sphere" + i, {diameter: 1, segments: 100 }, scene);
-    sphere.position = new Vector3(i * 2-8.5, 1.5, 3.0); // Adjust the x-coordinate for spacing
-    // sphere moon
-    let color;
-    switch (i % 7) {
+      let sphere = CreateSphere(
+        "sphere" + i,
+        { diameter: 1, segments: 100 },
+        scene
+      );
+      sphere.position = new Vector3(i * 2 - 8.5, 1.5, 3.0); // Adjust the x-coordinate for spacing
+      // sphere moon
+      let color;
+      switch (i % 7) {
         case 0:
-            color = new Color3(1, 1, 1); // Blue color
-            break;
+          color = new Color3(1, 1, 1); // Blue color
+          break;
         case 1:
-            color = new Color3(1, 1, 1); // Red color
-            break;
+          color = new Color3(1, 1, 1); // Red color
+          break;
         case 2:
-            color = new Color3(1, 1, 1); // Green color
-            break;
+          color = new Color3(1, 1, 1); // Green color
+          break;
         case 3:
-            color = new Color3(1, 1, 1); // Yellow color
-            break;
+          color = new Color3(1, 1, 1); // Yellow color
+          break;
         default:
-            color = new Color3(1, 1, 1); // Default white color
-            break;
-    }
-    sphere.metadata = {
+          color = new Color3(1, 1, 1); // Default white color
+          break;
+      }
+      sphere.metadata = {
         mat_color: color,
-        mat_texture: new Texture(BASE_URL + 'textures/themoon.jpg', scene),
+        mat_texture: new Texture(BASE_URL + "textures/themoon.jpg", scene),
         mat_specular: new Color3(0.8, 0.8, 0.8),
         mat_shininess: 6,
         texture_scale: new Vector2(1.0, 1.0),
-    };
-    sphere.material = materials["illum_" + this.shading_alg];
-    current_scene.models.push(sphere);
+      };
+      sphere.material = materials["illum_" + this.shading_alg];
+      current_scene.models.push(sphere);
 
-    let sphere1 = CreateSphere("sphere1", {diameter:4, segments: 100 }, scene);
-    sphere1.position = new Vector3(0.5, 6.5, 3.0);
-    sphere1.metadata = {
-      mat_color: new Color3(1, 1, 1),
-      mat_texture: new Texture(BASE_URL + 'textures/themoon.jpg', scene),
-      mat_specular: new Color3(0.8, 0.8, 0.8),
-      mat_shininess: 16,
-      texture_scale: new Vector2(1.0, 1.0),
-    };
-    sphere.material = materials["illum_" + this.shading_alg];
-    current_scene.models.push(sphere1);
+      let sphere1 = CreateSphere(
+        "sphere1",
+        { diameter: 4, segments: 100 },
+        scene
+      );
+      sphere1.position = new Vector3(0.5, 6.5, 3.0);
+      sphere1.metadata = {
+        mat_color: new Color3(1, 1, 1),
+        mat_texture: new Texture(BASE_URL + "textures/themoon.jpg", scene),
+        mat_specular: new Color3(0.8, 0.8, 0.8),
+        mat_shininess: 16,
+        texture_scale: new Vector2(1.0, 1.0),
+      };
+      sphere.material = materials["illum_" + this.shading_alg];
+      current_scene.models.push(sphere1);
     }
 
     //Blue background suits the moon
     for (let i = 0; i < 20; i++) {
       let box = CreateBox("box" + i, { width: 1, height: 10, depth: 1 }, scene);
-      box.position = new Vector3(i-9.5, 5.5, -2.0);
+      box.position = new Vector3(i - 9.5, 5.5, -2.0);
       // Define unique colors for each box
       let color;
       switch (i % 4) {
-          case 0:
-              color = new Color3(-1.75, -.15, -0.05); // blueish color
-              break;
-          case 1:
-              color = new Color3(-1.75, -.15, -0.05); 
-              break;
-          case 2:
-              color = new Color3(-1.75, -.15, -0.05); 
-              break;
-          case 3:
-              color = new Color3(-1.75, -.3, -0.05); // Another color
-              break;
-          // Add more cases for additional colors as needed
-          default:
-              color = new Color3(-1.0, -2.0, -3.5); // Default white color
-              break;
+        case 0:
+          color = new Color3(-1.75, -0.15, -0.05); // blueish color
+          break;
+        case 1:
+          color = new Color3(-1.75, -0.15, -0.05);
+          break;
+        case 2:
+          color = new Color3(-1.75, -0.15, -0.05);
+          break;
+        case 3:
+          color = new Color3(-1.75, -0.3, -0.05); // Another color
+          break;
+        // Add more cases for additional colors as needed
+        default:
+          color = new Color3(-1.0, -2.0, -3.5); // Default white color
+          break;
       }
       box.metadata = {
-          mat_color: color,
-          mat_texture: white_texture,
-          mat_specular: new Color3(0.4, 0.4, 0.4),
-          mat_shininess: 8,
-          texture_scale: new Vector2(1.0, 1.0),
+        mat_color: color,
+        mat_texture: white_texture,
+        mat_specular: new Color3(0.4, 0.4, 0.4),
+        mat_shininess: 8,
+        texture_scale: new Vector2(1.0, 1.0),
       };
       box.material = materials["illum_" + this.shading_alg];
       current_scene.models.push(box);
-      
-  }
-  
+    }
+
     // Animation function - called before each frame gets rendered
     scene.onBeforeRenderObservable.add(() => {
       // update models and lights here (if needed)
@@ -616,11 +633,10 @@ class Renderer {
     light1.specular = new Color3(1.0, 1.0, 1.0);
     current_scene.lights.push(light1);
 
-    let light2 = new PointLight('light2', new Vector3(1.0, 5.0, -10.0), scene);
-        light2.diffuse = new Color3(1.0, 1.0, 1.0);
-        light2.specular = new Color3(1.0, 1.0, 1.0);
-        current_scene.lights.push(light2);
-
+    let light2 = new PointLight("light2", new Vector3(1.0, 5.0, -10.0), scene);
+    light2.diffuse = new Color3(1.0, 1.0, 1.0);
+    light2.specular = new Color3(1.0, 1.0, 1.0);
+    current_scene.lights.push(light2);
 
     // Create ground mesh
     let white_texture = RawTexture.CreateRGBTexture(
@@ -644,33 +660,28 @@ class Renderer {
       heightmap: ground_heightmap,
     };
     ground_mesh.material = materials["ground_" + this.shading_alg];
-//PUSH AND COMMIT FOR BEN
-//Test again
-    // Create other models
-    let sphere = CreateSphere("sphere", { diameter: 2, segments: 100 }, scene);
-    sphere.position = new Vector3(1.0, 1.5, -3.0);
-    sphere.metadata = {
-      mat_color: new Color3(0.1, 0.35, 0.88),
+
+    // Create cylinder
+    let cylinder = CreateCylinder(
+      "cylinder",
+      {
+        diameterTop: 1,
+        diameterBottom: 1,
+        height: 3,
+        tessellation: 32,
+      },
+      scene
+    );
+    cylinder.position = new Vector3(2, 1.5, 0);
+    cylinder.metadata = {
+      mat_color: new Color3(0.5, 0.5, 0.5),
       mat_texture: white_texture,
       mat_specular: new Color3(0.8, 0.8, 0.8),
       mat_shininess: 16,
       texture_scale: new Vector2(1.0, 1.0),
     };
-    sphere.material = materials["illum_" + this.shading_alg];
-    current_scene.models.push(sphere);
-
-    let box = CreateBox("box", { width: 2, height: 1, depth: 1 }, scene);
-    box.position = new Vector3(-1.0, 0.5, 2.0);
-    box.metadata = {
-      mat_color: new Color3(0.75, 0.15, 0.05),
-      mat_texture: white_texture,
-      mat_specular: new Color3(0.4, 0.4, 0.4),
-      mat_shininess: 4,
-      texture_scale: new Vector2(1.0, 1.0),
-    };
-    box.material = materials["illum_" + this.shading_alg];
-    current_scene.models.push(box);
-
+    cylinder.material = materials["illum_" + this.shading_alg];
+    current_scene.models.push(cylinder);
     // Animation function - called before each frame gets rendered
     scene.onBeforeRenderObservable.add(() => {
       // update models and lights here (if needed)
