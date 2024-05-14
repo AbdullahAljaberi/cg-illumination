@@ -326,7 +326,7 @@ class Renderer {
       ellipsoid.position = new Vector3(-1.0, 1.0 + 0.3 * j, 0.0 + 0.3 * -j);
       ellipsoid.metadata = {
         mat_color: new Color3(0.6, 0.35, 0.88),
-        mat_texture: white_texture,
+        mat_texture: new Texture(BASE_URL + 'textures/ball.jpg',scene),
         mat_specular: new Color3(0.8, 0.8, 0.8),
         mat_shininess: 16,
         texture_scale: new Vector2(1.0, 1.0),
@@ -603,12 +603,12 @@ class Renderer {
     let scene = current_scene.scene;
     let materials = current_scene.materials;
     let ground_mesh = current_scene.ground_mesh;
-
+  
     // Set scene-wide / environment values
     scene.clearColor = current_scene.background_color;
     scene.ambientColor = current_scene.ambient;
     scene.useRightHandedSystem = true;
-
+  
     // Create camera
     current_scene.camera = new UniversalCamera(
       "camera",
@@ -621,23 +621,23 @@ class Renderer {
     current_scene.camera.fov = 35.0 * (Math.PI / 180);
     current_scene.camera.minZ = 0.1;
     current_scene.camera.maxZ = 100.0;
-
+  
     // Create point light sources
     let light0 = new PointLight("light0", new Vector3(1.0, 1.0, 5.0), scene);
     light0.diffuse = new Color3(1.0, 1.0, 1.0);
     light0.specular = new Color3(1.0, 1.0, 1.0);
     current_scene.lights.push(light0);
-
+  
     let light1 = new PointLight("light1", new Vector3(0.0, 3.0, 0.0), scene);
     light1.diffuse = new Color3(1.0, 1.0, 1.0);
     light1.specular = new Color3(1.0, 1.0, 1.0);
     current_scene.lights.push(light1);
-
+  
     let light2 = new PointLight("light2", new Vector3(1.0, 5.0, -10.0), scene);
     light2.diffuse = new Color3(1.0, 1.0, 1.0);
     light2.specular = new Color3(1.0, 1.0, 1.0);
     current_scene.lights.push(light2);
-
+  
     // Create ground mesh
     let white_texture = RawTexture.CreateRGBTexture(
       new Uint8Array([255, 255, 255]),
@@ -652,7 +652,7 @@ class Renderer {
     ground_mesh.scaling = new Vector3(20.0, 1.0, 20.0);
     ground_mesh.metadata = {
       mat_color: new Color3(0.1, 0.65, 0.15),
-      mat_texture: white_texture,
+      mat_texture: new Texture(BASE_URL + "textures/sodaworld.png",scene),
       mat_specular: new Color3(0.0, 0.0, 0.0),
       mat_shininess: 1,
       texture_scale: new Vector2(1.0, 1.0),
@@ -660,28 +660,40 @@ class Renderer {
       heightmap: ground_heightmap,
     };
     ground_mesh.material = materials["ground_" + this.shading_alg];
-
+  
     // Create cylinder
-    let cylinder = CreateCylinder(
-      "cylinder",
-      {
-        diameterTop: 1,
-        diameterBottom: 1,
-        height: 3,
-        tessellation: 32,
-      },
-      scene
-    );
+    let cylinder = CreateCylinder("cylinder", {
+      diameterTop: 1,
+      diameterBottom: 1,
+      height: 3,
+      tessellation: 32
+    }, scene);
     cylinder.position = new Vector3(2, 1.5, 0);
     cylinder.metadata = {
       mat_color: new Color3(0.5, 0.5, 0.5),
-      mat_texture: white_texture,
+      mat_texture: new Texture(BASE_URL + "textures/pepsi.jpeg", scene),
       mat_specular: new Color3(0.8, 0.8, 0.8),
       mat_shininess: 16,
-      texture_scale: new Vector2(1.0, 1.0),
+      texture_scale: new Vector2(1.0, 1.0)
     };
     cylinder.material = materials["illum_" + this.shading_alg];
     current_scene.models.push(cylinder);
+    let cylinder1 = CreateCylinder("cylinder1", {
+      diameterTop: 1,
+      diameterBottom: 1,
+      height: 3,
+      tessellation: 32
+    }, scene);
+    cylinder1.position = new Vector3(-2, 1.5, 3);
+    cylinder1.metadata = {
+      mat_color: new Color3(0.5, 0.5, 0.5),
+      mat_texture: new Texture(BASE_URL + "textures/sprite.png", scene),
+      mat_specular: new Color3(0.8, 0.8, 0.8),
+      mat_shininess: 16,
+      texture_scale: new Vector2(1.0, 1.0)
+    };
+    cylinder1.material = materials["illum_" + this.shading_alg];
+    current_scene.models.push(cylinder1);
     // Animation function - called before each frame gets rendered
     scene.onBeforeRenderObservable.add(() => {
       // update models and lights here (if needed)
